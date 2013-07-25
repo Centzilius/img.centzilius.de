@@ -34,7 +34,13 @@ if (isset($_GET['thumbnail'])) {
   }
 }
 # Start here with HTML!
-?>
+?><!DOCTYPE html>
+<html><head>
+
+<title><?php echo("Mach mir nen Ordentliches CSS-Layout!"); ?></title>
+
+</head><body>
+
 <table>
 <tr><th>Preview</th><th>Filename</th></tr>
 <?php
@@ -49,3 +55,5 @@ if ($h = opendir(__DIR__)) {
 }
 ?>
 </table>
+
+</body></html>
