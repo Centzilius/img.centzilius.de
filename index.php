@@ -54,7 +54,6 @@ if (isset($_GET['thumbnail'])) {
 <body>
   <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
-      <div class="container">
         <a class="brand" href="https://centzilius.de">centzilius.de</a>
         <div class="nav-collapse collapse">
           <ul class="nav">
@@ -64,7 +63,6 @@ if (isset($_GET['thumbnail'])) {
           </ul>
         </div>
       </div>
-    </div>
   </div>
   <div class="container">
     <div class="row">
