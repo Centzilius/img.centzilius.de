@@ -39,25 +39,61 @@ if (isset($_GET['thumbnail'])) {
 }
 # Start here with HTML!
 ?><!DOCTYPE html>
-<html><head>
-
-<title><?php echo("Mach mir nen Ordentliches CSS-Layout!"); ?></title>
-
-</head><body>
-
-<table>
-<tr><th>Preview</th><th>Filename</th></tr>
+<html>
+<head>
+  <title>centzilius.de - Bilder</title>
+  <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+  <script src="http://code.jquery.com/jquery.js"></script>
+  <script src="bootstrap/js/bootstrap.min.js"></script>
+  <style type="text/css">
+    body {
+      padding-top: 60px;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="brand" href="https://centzilius.de">centzilius.de</a>
+        <div class="nav-collapse collapse">
+          <ul class="nav">
+            <li><a href="https://ask.centzilius.de">Frag den Cent</a></li>
+            <li class="active"><a href="#">Bilder</a></li>
+            <li><a href="https://actioncraft.de">ActionCraft</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="span2">
+        <div class="span8">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>Vorschau</th>
+                <th>Dateiname</th>
+              </tr>
+            </thead>
+            <tbody>
 <?php
 if ($h = opendir(__DIR__)) {
 	while (false !== ($e = readdir($h))) {
 		if ($e[0]!='.' && in_array(pathinfo($e,PATHINFO_EXTENSION),array("jpg","png","gif","jpeg"))) {
-			echo "<tr><td><img src=\"index.php?thumbnail=".$e."\" width=100 /></td><td><a href=\"$e\">$e</a></td></tr>".PHP_EOL;
+			echo "<tr><td><img src=\"index.php?thumbnail=".$e."\" class="img-polaroid" alt="Vorschaubild" width=100></td><td><a href=\"$e\">$e</a></td></tr>".PHP_EOL;
 		} 
 	}
 } else {
 	echo 'Nothing is here yet :(';
 }
 ?>
-</table>
-
-</body></html>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
