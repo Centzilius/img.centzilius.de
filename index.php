@@ -47,7 +47,7 @@ if (isset($_GET['thumbnail'])) {
   <script src="bootstrap/js/bootstrap.min.js"></script>
   <style type="text/css">
     container {
-      margin-top: 50px;
+      margin-top: 60px;
     }
   </style>
 </head>
