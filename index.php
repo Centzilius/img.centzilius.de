@@ -1,7 +1,7 @@
 <?php
 
 define("IMAGE_WIDTH",200);
-define("PAGE_IMAGES",8);
+define("PAGE_IMAGES",5);
 
 if (isset($_GET['thumbnail'])) {
   $fn=$_GET['thumbnail'];
