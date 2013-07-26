@@ -82,7 +82,7 @@ if (isset($_GET['thumbnail'])) {
 if ($h = opendir(__DIR__)) {
 	while (false !== ($e = readdir($h))) {
 		if ($e[0]!='.' && in_array(pathinfo($e,PATHINFO_EXTENSION),array("jpg","png","gif","jpeg"))) {
-			echo "<tr><td><img src=\"index.php?thumbnail=".$e."\" class="img-polaroid" alt="Vorschaubild" width=100></td><td><a href=\"$e\">$e</a></td></tr>".PHP_EOL;
+			echo "<tr><td><img src=\"index.php?thumbnail=".$e."\" class=img-polaroid alt=Vorschaubild width=100></td><td><a href=\"$e\">$e</a></td></tr>".PHP_EOL;
 		} 
 	}
 } else {
