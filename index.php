@@ -1,5 +1,8 @@
 <?php
 
+define("IMAGE_WIDTH",200);
+define("PAGE_IMAGES",5);
+
 if (isset($_GET['thumbnail'])) {
   $fn=$_GET['thumbnail'];
   $fn=str_replace("\\/|<>","",$fn);
@@ -24,7 +27,7 @@ if (isset($_GET['thumbnail'])) {
     $img=$createfunc($fn);
     $w=imagesx($img);
     $h=imagesy($img);
-    $nw=200; # 140px breit
+    $nw=IMAGE_WIDTH;
     $nh=floor($h*($nw/$w));
     $new=imagecreatetruecolor($nw,$nh);
     #imagealphablending($new, false);  
@@ -76,18 +79,36 @@ if (isset($_GET['thumbnail'])) {
       </thead>
       <tbody>
 <?php
+
+$page=(isset($_GET['page'])?((int)$_GET['page']):0);
+
 if ($h = opendir(__DIR__)) {
-	while (false !== ($e = readdir($h))) {
-		if ($e[0]!='.' && in_array(pathinfo($e,PATHINFO_EXTENSION),array("jpg","png","gif","jpeg"))) {
-			echo "<tr><td><img src=\"index.php?thumbnail=".$e."\" class=img-polaroid alt=Vorschaubild width=200></td><td><a href=\"$e\">$e</a></td></tr>".PHP_EOL;
-		} 
-	}
-} else {
-	echo 'Nothing is here yet :(';
+  $files=array();
+  while (false !== ($e = readdir($h))) {
+    if ($e[0]!='.' && in_array(pathinfo($e,PATHINFO_EXTENSION),array("jpg","png","gif","jpeg"))) {
+      $files[$e]=filemtime($e);
+    } 
+  }
+  arsort($files);
+  $files=array_keys($files);
+  $start=$page*PAGE_IMAGES;
+  for ($i=$start;$i<$start+PAGE_IMAGES; $i++) {
+    if (!isset($files[$i])) break;
+    $e=$files[$i];
+    echo "<tr><td><img src=\"index.php?thumbnail=".$e."\" class=img-polaroid alt=Vorschaubild width=200></td><td><a href=\"$e\">$e</a></td></tr>".PHP_EOL;
+  }
+
 }
+
+# 
+
 ?>
       </tbody>
     </table>
+<?php
+  if ($page>0) echo('<a href="?page='.($page-1).'">Zur&uuml;ck</a>');
+  if ($i<count($files)) echo('<a href="?page='.($page+1).'">Weiter</a>');
+?>
   </div>
 </body>
 </html>
