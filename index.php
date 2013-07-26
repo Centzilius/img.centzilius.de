@@ -46,8 +46,8 @@ if (isset($_GET['thumbnail'])) {
   <script src="http://code.jquery.com/jquery.js"></script>
   <script src="bootstrap/js/bootstrap.min.js"></script>
   <style type="text/css">
-    body {
-      padding-top: 60px;
+    container {
+      margin-top: 50px;
     }
   </style>
 </head>
