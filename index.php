@@ -1,7 +1,7 @@
 <?php
 
 define("IMAGE_WIDTH",200);
-define("PAGE_IMAGES",5);
+define("PAGE_IMAGES",8);
 
 if (isset($_GET['thumbnail'])) {
   $fn=$_GET['thumbnail'];
@@ -91,7 +91,7 @@ if ($h = opendir(__DIR__)) {
   }
   arsort($files);
   $files=array_keys($files);
-  $start=$page*PAGE_IMAGES;
+  $start=($page-1)*PAGE_IMAGES;
   for ($i=$start;$i<$start+PAGE_IMAGES; $i++) {
     if (!isset($files[$i])) break;
     $e=$files[$i];
@@ -106,7 +106,7 @@ if ($h = opendir(__DIR__)) {
       </tbody>
     </table>
 <?php
-  if ($page>0) echo('<a href="?page='.($page-1).'">Zur&uuml;ck</a>');
+  if ($page>1) echo('<a href="?page='.($page-1).'">Zur&uuml;ck</a>');
   if ($i<count($files)) echo('<a href="?page='.($page+1).'">Weiter</a>');
 ?>
   </div>
