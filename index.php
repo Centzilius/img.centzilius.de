@@ -95,17 +95,12 @@ if ($h = opendir(__DIR__)) {
   for ($i=$start;$i<$start+PAGE_IMAGES; $i++) {
     if (!isset($files[$i])) break;
     $e=$files[$i];
-    echo "<tr><td><img src=\"index.php?thumbnail=".$e."\" class=img-polaroid alt=Vorschaubild width=200></td><td><a href=\"$e\">$e</a></td></tr>".PHP_EOL;
+    echo "<tr><td><a href=\"".$e."\"><img src=\"index.php?thumbnail=".$e."\" class=img-polaroid alt=""></a></td><td><a href=\"$e\">$e</a></td></tr>".PHP_EOL;
   }
-
-}
-
-# 
-
-?>
+} ?>
       </tbody>
     </table>
-    <div class="pagination">
+    <div class="pagination pagination-centered">
     <ul>
 <?php
   if ($page>1) echo('<li><a href="?page='.($page-1).'">&laquo;</a></li>'.PHP_EOL);
@@ -116,9 +111,6 @@ if ($h = opendir(__DIR__)) {
 ?>
     </ul>
     </div>
-<?php
-
-?>
   </div>
 </body>
 </html>
