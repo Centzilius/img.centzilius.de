@@ -44,16 +44,17 @@ if (isset($_GET['thumbnail'])) {
   <title>centzilius.de - Bilder</title>
   <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
   <script src="http://code.jquery.com/jquery.js"></script>
-  <script src="bootstrap/js/bootstrap.min.js"></script>
+  <script src="bootstrap/js/bootstrap.js"></script>
   <style type="text/css">
-    .container {
-      margin-top: 60px;
+    body {
+      padding-top: 60px;
     }
   </style>
 </head>
 <body>
   <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
+      <div class="container">
         <a class="brand" href="https://centzilius.de">centzilius.de</a>
         <div class="nav-collapse collapse">
           <ul class="nav">
@@ -63,6 +64,7 @@ if (isset($_GET['thumbnail'])) {
           </ul>
         </div>
       </div>
+    </div>
   </div>
   <div class="container">
     <div class="row">
