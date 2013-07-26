@@ -80,7 +80,7 @@ if (isset($_GET['thumbnail'])) {
       <tbody>
 <?php
 
-$page=(isset($_GET['page'])?((int)$_GET['page']):0);
+$page=(isset($_GET['page'])?((int)$_GET['page']):1);
 
 if ($h = opendir(__DIR__)) {
   $files=array();
