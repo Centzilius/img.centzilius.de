@@ -27,9 +27,13 @@ if (isset($_GET['thumbnail'])) {
     $nw=200; # 200px breit
     $nh=floor($h*($nw/$w));
     $new=imagecreatetruecolor($nw,$nh);
+    #imagealphablending($new, false);  
+    $color = imagecolorallocatealpha($new, 0, 0, 0, 127);
+    imagefill($new, 0, 0, $color);
+    imagesavealpha($new, true);
     imagecopyresized($new,$img,0,0,0,0,$nw,$nh,$w,$h);
-    header("Content-Type: image/jpg");
-    imagejpeg($new);
+    header("Content-Type: image/png");
+    imagepng($new);
     exit;
   }
 }
