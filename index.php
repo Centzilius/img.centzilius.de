@@ -24,7 +24,7 @@ if (isset($_GET['thumbnail'])) {
     $img=$createfunc($fn);
     $w=imagesx($img);
     $h=imagesy($img);
-    $nw=140; # 140px breit
+    $nw=200; # 140px breit
     $nh=floor($h*($nw/$w));
     $new=imagecreatetruecolor($nw,$nh);
     #imagealphablending($new, false);  
@@ -67,33 +67,27 @@ if (isset($_GET['thumbnail'])) {
     </div>
   </div>
   <div class="container">
-    <div class="row">
-      <div class="span3">
-        <div class="span6">
-          <table class="table table-bordered table-hover">
-            <thead>
-              <tr>
-                <th>Vorschau</th>
-                <th>Dateiname</th>
-              </tr>
-            </thead>
-            <tbody>
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Vorschau</th>
+          <th>Dateiname</th>
+        </tr>
+      </thead>
+      <tbody>
 <?php
 if ($h = opendir(__DIR__)) {
 	while (false !== ($e = readdir($h))) {
 		if ($e[0]!='.' && in_array(pathinfo($e,PATHINFO_EXTENSION),array("jpg","png","gif","jpeg"))) {
-			echo "<tr><td><img src=\"index.php?thumbnail=".$e."\" class=img-polaroid alt=Vorschaubild width=140></td><td><a href=\"$e\">$e</a></td></tr>".PHP_EOL;
+			echo "<tr><td><img src=\"index.php?thumbnail=".$e."\" class=img-polaroid alt=Vorschaubild width=200></td><td><a href=\"$e\">$e</a></td></tr>".PHP_EOL;
 		} 
 	}
 } else {
 	echo 'Nothing is here yet :(';
 }
 ?>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+      </tbody>
+    </table>
   </div>
 </body>
 </html>
