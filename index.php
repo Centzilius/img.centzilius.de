@@ -105,9 +105,19 @@ if ($h = opendir(__DIR__)) {
 ?>
       </tbody>
     </table>
+    <div class="pagination">
+    <ul>
 <?php
-  if ($page>1) echo('<a href="?page='.($page-1).'">Zur&uuml;ck</a>');
-  if ($i<count($files)) echo('<a href="?page='.($page+1).'">Weiter</a>');
+  if ($page>1) echo('<li><a href="?page='.($page-1).'">&laquo;</a></li>'.PHP_EOL);
+  for ($j=$page-3;$j<=$page+3; $j++) {
+    if ($j>0 && ($j-1)*PAGE_IMAGES<count($files)) echo('<li>'.($j==$page?'<span>'.$j.'</span>':'<a href="?page='.$j.'">'.$j.'</a>').'</li>'.PHP_EOL);
+  }  
+  if ($i<count($files)) echo('<li><a href="?page='.($page+1).'">&raquo;</a></li>'.PHP_EOL);
+?>
+    </ul>
+    </div>
+<?php
+
 ?>
   </div>
 </body>
