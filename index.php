@@ -1,5 +1,9 @@
 <?php
-
+/*
+This page is made by Nero and Centzilius using Twitter Bootstrap available at twitter.github.io/bootstrap
+Thanks to Nero and nilsding for the PHP Code
+Thanks to pixeldesu for the idea
+*/
 define("IMAGE_WIDTH",200);
 define("PAGE_IMAGES",5);
 
