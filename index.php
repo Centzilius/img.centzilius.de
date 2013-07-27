@@ -99,7 +99,7 @@ if ($h = opendir(__DIR__)) {
   for ($i=$start;$i<$start+PAGE_IMAGES; $i++) {
     if (!isset($files[$i])) break;
     $e=$files[$i];
-    echo "<tr><td><a href=\"".$e."\"><img src=\"index.php?thumbnail=".$e."\" class=img-polaroid alt=""></a></td><td><a href=\"$e\">$e</a></td></tr>".PHP_EOL;
+    echo "<tr><td><a href=\"$e\"><img src=\"index.php?thumbnail=".$e."\" class=img-polaroid alt=""></a></td><td><a href=\"$e\">$e</a></td></tr>".PHP_EOL;
   }
 } ?>
       </tbody>
