@@ -52,6 +52,7 @@ if (isset($_GET['thumbnail'])) {
   <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
   <script src="http://code.jquery.com/jquery.js"></script>
   <script src="bootstrap/js/bootstrap.js"></script>
+  <meta charset="utf-8">
   <style type="text/css">
     body {
       padding-top: 60px;
