@@ -38,7 +38,7 @@ if (isset($_GET['thumbnail'])) {
     $color = imagecolorallocatealpha($new, 0, 0, 0, 127);
     imagefill($new, 0, 0, $color);
     imagesavealpha($new, true);
-    imagecopyresized($new,$img,0,0,0,0,$nw,$nh,$w,$h);
+    imagecopyresampled($new,$img,0,0,0,0,$nw,$nh,$w,$h);
     header("Content-Type: image/png");
     imagepng($new);
     exit;
