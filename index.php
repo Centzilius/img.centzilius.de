@@ -7,6 +7,8 @@ Thanks to pixeldesu for the idea
 define("IMAGE_WIDTH",200);
 define("PAGE_IMAGES",5);
 
+date_default_timezone_set("UTC");
+
 if (isset($_GET['thumbnail'])) {
   $fn=$_GET['thumbnail'];
   $fn=str_replace("\\/|<>","",$fn);
