@@ -84,8 +84,3 @@ function gotopage(page) {
 	buildImageContainer()
 	pageination();
 }
-
-function nextpage() {
-	maximg += imgperpage;
-	buildImageContainer();
-}
