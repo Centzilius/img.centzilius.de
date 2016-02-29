@@ -1,7 +1,23 @@
 <?php
 require_once(__DIR__ . "/config.php");
-$_GET['action'] = str_replace("\\/|<>","", $_GET['action']);
-$_GET['filename'] = str_replace("\\/|<>","", $_GET['filename']);
+
+$param = Array();
+switch($_SERVER['REQUEST_METHOD']) {
+	case "GET":
+		$param["action"] = str_replace("\\/|<>","", $_GET['action']);
+		$param["filename"] = str_replace("\\/|<>","", $_GET['filename']);
+		$param["key"] = str_replace("\\/|<>","", $_GET["key"]);
+		break;
+	case "POST":
+		$param["action"] = str_replace("\\/|<>","", $_POST['action']);
+		$param["filename"] = str_replace("\\/|<>","", $_POST['filename']);
+		$param["key"] = str_replace("\\/|<>","", $_POST["key"]);
+		$param["file"] = $_FILES["file"];
+		break;
+	default:
+		http_response_code(405);
+		die();
+}
 
 function getImageList($dir) {
 	$images = array();
@@ -57,15 +73,37 @@ function genThumbnail($fn, $imagewidth) {
 	exit;
 }
 
-switch($_GET['action']) {
+function uploadPicture($file) {
+	if (!in_array($file["type"], array("image/png", "image/gif", "image/jpeg"))) {
+		header("Content-type: application/json");
+		print(json_encode(array("success"=>"false", "error"=>"Invalid Filetype"), JSON_PRETTY_PRINT));
+		exit();
+	}
+	if (move_uploaded_file($file["tmp_name"], IMAGE_ROOT.$file["name"])) {
+		header("Content-type: application/json");
+		print(json_encode(array("success"=>"true", "error"=>null, "response"=>array("url"=>"https://" . $_SERVER['HTTP_HOST'] . RELATIVE_IMAGE_ROOT . $file["name"]))));
+		exit();
+	} else {
+		header("Content-type: application/json");
+		print(json_encode(array("success"=>"false", "error"=>"Uploading error", "response"=>null)));
+		exit();
+	}
+}
+
+switch($param['action']) {
 	case "genThumbnail":
-		genThumbnail(IMAGE_ROOT . $_GET['filename'], IMAGE_WIDTH);
+		genThumbnail(IMAGE_ROOT . $param['filename'], IMAGE_WIDTH);
 		break;
 	case "getImages":
 		getImageList(IMAGE_ROOT);
 		break;
 	case "upload":
-		// TODO
+		if ($param["key"] != API_KEY) {
+			header("Content-type: application/json");
+			print(json_encode(array("success"=>"false", "error"=>"API Key Invalid"), JSON_PRETTY_PRINT));
+			exit();
+		}
+		uploadPicture($param["file"]);
 		break;
 	default:
 		// TODO
