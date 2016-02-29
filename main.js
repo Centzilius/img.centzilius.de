@@ -173,10 +173,6 @@ function gotopage(page) {
 	pageination();
 }
 
-function nextpage() {
-	maximg += imgperpage;
-	buildImageContainer();
-}
 if(window.location.hash) {
 	var hash = window.location.hash.substring(1);
 	gotopage(hash);
