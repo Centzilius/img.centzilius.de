@@ -19,19 +19,25 @@ switch($_SERVER['REQUEST_METHOD']) {
 		die();
 }
 
-function getImageList($dir) {
-	$images = array();
-	foreach (array_reverse(scandir($dir, SCANDIR_SORT_NONE)) as $i => $value) {
+function getImageList() {
+	$files = array();
+	foreach (scandir(IMAGE_ROOT, SCANDIR_SORT_NONE) as $value) {
 		if (in_array(pathinfo($value, PATHINFO_EXTENSION), array("jpg","png","gif","jpeg"))) {
-			$size = getimagesize(IMAGE_ROOT . $value);
-			array_push($images, array(
-										"filename" => $value,
-										"path" => RELATIVE_IMAGE_ROOT . $value,
-										"thumbnail" => RELATIVE_SCRIPT_ROOT . "api.php?action=genThumbnail&filename=" . $value,
-										"width" => $size[0],
-										"height" => $size[1],
-									));
+			$files[$value] = filemtime(IMAGE_ROOT . $value);
 		}
+	}
+	arsort($files);
+	$images = array();
+	foreach ($files as $file => $date) {
+		$size = getimagesize(IMAGE_ROOT . $file);
+		array_push($images, array(
+			"filename" => $file,
+			"path" => RELATIVE_IMAGE_ROOT . $file,
+			"thumbnail" => RELATIVE_SCRIPT_ROOT . "api.php?action=genThumbnail&filename=" . $file,
+			"width" => $size[0],
+			"height" => $size[1],
+			"time" => $date
+			));
 	}
 	header("Content-type: application/json");
 	print(json_encode($images, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
@@ -76,16 +82,16 @@ function genThumbnail($fn, $imagewidth) {
 function uploadPicture($file) {
 	if (!in_array($file["type"], array("image/png", "image/gif", "image/jpeg"))) {
 		header("Content-type: application/json");
-		print(json_encode(array("success"=>"false", "error"=>"Invalid Filetype"), JSON_PRETTY_PRINT));
+		print(json_encode(array("success"=>false, "error"=>"Invalid Filetype"), JSON_PRETTY_PRINT));
 		exit();
 	}
 	if (move_uploaded_file($file["tmp_name"], IMAGE_ROOT.$file["name"])) {
 		header("Content-type: application/json");
-		print(json_encode(array("success"=>"true", "error"=>null, "response"=>array("url"=>"https://" . $_SERVER['HTTP_HOST'] . RELATIVE_IMAGE_ROOT . $file["name"]))));
+		print(json_encode(array("success"=>true, "error"=>null, "response"=>array("url"=>"https://" . $_SERVER['HTTP_HOST'] . RELATIVE_IMAGE_ROOT . $file["name"]))));
 		exit();
 	} else {
 		header("Content-type: application/json");
-		print(json_encode(array("success"=>"false", "error"=>"Uploading error", "response"=>null)));
+		print(json_encode(array("success"=>false, "error"=>"Uploading error", "response"=>null), JSON_PRETTY_PRINT));
 		exit();
 	}
 }
@@ -95,12 +101,12 @@ switch($param['action']) {
 		genThumbnail(IMAGE_ROOT . $param['filename'], IMAGE_WIDTH);
 		break;
 	case "getImages":
-		getImageList(IMAGE_ROOT);
+		getImageList();
 		break;
 	case "upload":
 		if ($param["key"] != API_KEY) {
 			header("Content-type: application/json");
-			print(json_encode(array("success"=>"false", "error"=>"API Key Invalid"), JSON_PRETTY_PRINT));
+			print(json_encode(array("success"=>false, "error"=>"API Key Invalid"), JSON_PRETTY_PRINT));
 			exit();
 		}
 		uploadPicture($param["file"]);
