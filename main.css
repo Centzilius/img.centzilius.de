@@ -7,3 +7,6 @@ body #img-container nav {
 	text-align: center;
 }
 
+html {
+	overflow-y: inherit !important;
+}
