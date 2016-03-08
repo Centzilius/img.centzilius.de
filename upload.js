@@ -43,7 +43,8 @@ document.addEventListener("keypress", function(event){
 							});
 						}
 					}
-				}
+				},
+				onEscape: function() {busy=false}
 			});
 		}
 	}
