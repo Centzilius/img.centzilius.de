@@ -104,7 +104,7 @@ switch($param['action']) {
 		getImageList();
 		break;
 	case "upload":
-		if ($param["key"] != API_KEY) {
+		if (password_verify($param["key"], API_KEY)) {
 			header("Content-type: application/json");
 			print(json_encode(array("success"=>false, "error"=>"API Key Invalid"), JSON_PRETTY_PRINT));
 			exit();
