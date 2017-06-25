@@ -22,7 +22,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 function getImageList() {
 	$files = array();
 	foreach (scandir(IMAGE_ROOT, SCANDIR_SORT_NONE) as $value) {
-		if (in_array(pathinfo($value, PATHINFO_EXTENSION), array("jpg","png","gif","jpeg"))) {
+		if (in_array(strtolower(pathinfo($value, PATHINFO_EXTENSION)), array("jpg","png","gif","jpeg"))) {
 			$files[$value] = filemtime(IMAGE_ROOT . $value);
 		}
 	}
@@ -61,7 +61,7 @@ function genThumbnail($fn, $imagewidth) {
 		header("HTTP/1.1 304 Not Modified"); # Nutze deinen Cache
 		exit;
 	}
-	$type = pathinfo($fn, PATHINFO_EXTENSION);
+	$type = strtolower(pathinfo($fn, PATHINFO_EXTENSION));
 	$createfunc = "imagecreatefrom" . ($type=="jpg"?"jpeg":$type);
 	if (!function_exists($createfunc)) { genDefaultPicture(); }
 	$img = $createfunc($fn);
@@ -104,7 +104,7 @@ switch($param['action']) {
 		getImageList();
 		break;
 	case "upload":
-		if (password_verify($param["key"], API_KEY)) {
+		if (!password_verify($param["key"], API_KEY)) {
 			header("Content-type: application/json");
 			print(json_encode(array("success"=>false, "error"=>"API Key Invalid"), JSON_PRETTY_PRINT));
 			exit();
